@@ -1,31 +1,43 @@
-﻿namespace ChallengeApp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace ChallengeApp
 {
-    internal class Employee
+    public class Employee
     {
-        public string Name { get; private set; }
-        public string LastName { get; private set; }
-        public int Age { get; private set; }
-        private List<int> Grades = new List<int>();
-
-        public void AddGrade(int Grade)
-        {
-            Grades.Add(Grade);
-        }
-        public int SumGrades { get { return Grades.Sum(); } }
-
-        public void Display()
-        {
-            Console.WriteLine("Name:"+Name);
-            Console.WriteLine("Last Name: "+LastName);
-            Console.WriteLine("Age: "+Age);
-            Console.WriteLine("Score: " + Grades.Sum());
-        }
-        public Employee(string name, string lastname, int age)
+        private List<float> grades = new List<float>();
+        public Employee(string name, string surname)
         {
             this.Name = name;
-            this.LastName = lastname;
-            this.Age = age;
+            this.Surname = surname;
+        }
+        public string Name { get; private set; }
+        public string Surname { get; private set; }
 
+        public void AddGrade(float grade)
+        {
+            this.grades.Add(grade);
+        }
+
+        public Statistics GetStatistics()
+        {
+            var statistics = new Statistics();
+            statistics.Average = 0;
+            statistics.Max = float.MinValue;
+            statistics.Min = float.MaxValue;
+
+            foreach (var grade in this.grades)
+            {
+                statistics.Max = Math.Max(statistics.Max, grade);
+                statistics.Min = Math.Min(statistics.Min, grade);
+                statistics.Average += grade;
+            }
+            statistics.Average /= this.grades.Count;
+            return statistics;
         }
     }
 }
