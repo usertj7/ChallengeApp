@@ -6,13 +6,14 @@ namespace Employe.Tests
 {
     public class EmployeeTests
     {
-        Employee emp = new Employee("Jan", "duda");
+        
         //employee.AddGrade(2);
 
         [Test]
         public void checkAverage()
         {
             //arrange
+            Employee emp = new Employee("Jan", "duda");
             emp.AddGrade(4);
             emp.AddGrade(2);
             emp.AddGrade(6);
@@ -25,6 +26,7 @@ namespace Employe.Tests
         public void checkMax()
         {
             //arrange
+            Employee emp = new Employee("Jan", "duda");
             emp.AddGrade(4);
             emp.AddGrade(5);
             //act
@@ -36,6 +38,7 @@ namespace Employe.Tests
         public void checkMin()
         {
             //arrrange
+            Employee emp = new Employee("Jan", "duda");
             emp.AddGrade(2);
             emp.AddGrade(2);
             emp.AddGrade(3);
@@ -43,6 +46,20 @@ namespace Employe.Tests
             var stats2=emp.GetStatistics();
             //assert
             Assert.AreEqual(stats2.Min, 2.0F);
+        }
+
+        [Test]
+        public void checkAverageGradeAsALetter()
+        {
+            //arrange
+            Employee emp = new Employee("Jan", "duda");
+            emp.AddGrade(20);
+            emp.AddGrade(80);
+            emp.AddGrade(30);
+            //act
+            var stats3 = emp.GetStatistics();
+            //assert
+            Assert.AreEqual(stats3.AverageLetter, 'C');
         }
     }
 }
