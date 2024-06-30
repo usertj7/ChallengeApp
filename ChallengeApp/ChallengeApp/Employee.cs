@@ -27,8 +27,8 @@ namespace ChallengeApp
             }
             else
             {
-                Console.WriteLine("invalid grade value");
-            }   
+                throw new Exception("invalid grade value");
+            }
         }
 
         public void AddGrade(string grade)
@@ -37,22 +37,27 @@ namespace ChallengeApp
             {
                 this.AddGrade(result);
             }
+            else if (grade.Length == 1)
+            {
+                char character = char.Parse(grade);
+                AddGrade(character);
+            }
             else
             {
-                Console.WriteLine("string is not a float");
+                throw new Exception("string is not a float");
             }
         }
 
         public void AddGrade(double grade)
         {
 
-            Console.WriteLine("double, precision will be reduced");
+
             this.AddGrade((float)grade);
         }
 
         public void AddGrade(long grade)
         {
-            Console.WriteLine("long, precision will be reduced");
+
             this.AddGrade((float)grade);
         }
 
@@ -66,17 +71,20 @@ namespace ChallengeApp
                     break;
 
                 case 'B':
+                case 'b':
                     this.grades.Add(80);
                     break;
                 case 'C':
+                case 'c':
                     this.grades.Add(60);
                     break;
                 case 'D':
+                case 'd':
                     this.grades.Add(40);
                     break;
                 default:
-                    this.grades.Add(0);
-                    break;
+                    throw new Exception("wrong letter");
+
 
 
 
@@ -91,7 +99,7 @@ namespace ChallengeApp
             statistics.Min = float.MaxValue;
 
             var index = 0;
-           
+
 
             foreach (var grade in this.grades)
             {
@@ -103,16 +111,16 @@ namespace ChallengeApp
 
             switch (statistics.Average)
             {
-                case var a when a >= 80:
+                case var a when a > 80:
                     statistics.AverageLetter = 'A';
                     break;
-                case var a when a >= 60:
+                case var a when a > 60:
                     statistics.AverageLetter = 'B';
                     break;
-                case var a when a >= 40:
+                case var a when a > 40:
                     statistics.AverageLetter = 'C';
                     break;
-                case var a when a >= 20:
+                case var a when a > 20:
                     statistics.AverageLetter = 'D';
                     break;
                 default:
