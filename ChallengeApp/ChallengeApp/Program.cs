@@ -6,7 +6,7 @@ Console.WriteLine("Witamy w programi do oceny pracownikow");
 Console.WriteLine("==================================");
 
 
-var employee = new Employee("marek", "kot");
+var employee = new Supervisor("marek", "kot");
 
 
 while (true)

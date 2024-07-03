@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace ChallengeApp
 {
-    public class Employee : IEmployee
+    internal class Supervisor : IEmployee
     {
         private List<float> grades = new List<float>();
-        public Employee(string name, string surname)
+        public Supervisor(string name, string surname)
         {
-            this.Name= name;
-            this.Surname= surname;
+            this.Name = name;
+            this.Surname = surname;
         }
 
         public string Name { get; private set; }
         public string Surname { get; private set; }
-        
+
 
         public void AddGrade(float grade)
         {
@@ -35,31 +33,55 @@ namespace ChallengeApp
 
         public void AddGrade(string grade)
         {
-            if (float.TryParse(grade, out float result))
+            float extraGrade = 0;
+            if (grade.Length >= 2)
             {
-                this.AddGrade(result);
+                if (grade[grade.Length - 2] == '-' || grade[grade.Length - 1] == '-')
+                {
+                    extraGrade = -5;
+                    grade = grade.Trim('-');
+                }
+                else if (grade[grade.Length - 2] == '+' || grade[grade.Length - 1] == '+')
+                {
+                    extraGrade = 5;
+                    grade = grade.Trim('+');
+                }
             }
-            else if (grade.Length == 1)
+            Console.WriteLine(grade);
+            switch (grade)
             {
-                char character = char.Parse(grade);
-                AddGrade(character);
+                case "6":
+                    this.AddGrade(100 + extraGrade);
+                    break;
+                case "5":
+                    this.AddGrade(80 + extraGrade);
+                    break;
+                case "4":
+                    this.AddGrade(60 + extraGrade);
+                    break;
+                case "3":
+                    this.AddGrade(40 + extraGrade);
+                    break;
+                case "2":
+                    this.AddGrade(20 + extraGrade);
+                    break;
+                case "1":
+                    this.AddGrade(0 + extraGrade);
+                    break;
+                default:
+                    throw new Exception("invalid grade value");
             }
-            else
-            {
-                throw new Exception("string is not a float");
-            }
+
+
         }
 
         public void AddGrade(double grade)
         {
-
-
             this.AddGrade((float)grade);
         }
 
         public void AddGrade(long grade)
         {
-
             this.AddGrade((float)grade);
         }
 
@@ -86,10 +108,6 @@ namespace ChallengeApp
                     break;
                 default:
                     throw new Exception("wrong letter");
-
-
-
-
             }
         }
 
